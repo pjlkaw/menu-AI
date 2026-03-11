@@ -1,17 +1,19 @@
-import "dotenv/config"
 import Groq from "groq-sdk";
+import 'dotenv/config'
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
 
-export async function getGroqChatCompletion() {
+async function getGroqChatCompletion() {
   return groq.chat.completions.create({
-    message: [{
-        content: "Faça um resumo da primeira guerra mundial"
-    }]
+    messages: [{
+        role: "user",
+        content: "Faça um resumo da segunda guerra mundial"
+    }],
+    "model": "openai/gpt-oss-20b"
   })
 }
 
-export async function main() {
+async function main() {
   const chatCompletion = await getGroqChatCompletion();
   console.log(chatCompletion.choices[0]?.message?.content || "");
 }
