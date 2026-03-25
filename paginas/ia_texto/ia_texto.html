@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br>
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,14 +10,27 @@
     <section>
         <div>
             <input type="text" id="request_input" class="request_input">
-            <button>.</button>
+            <button id="btn_request">.</button>
         </div>
-        <div id="response" class="response">
-            
+        <div>
+            <p id="p_html" class="response"></p>
         </div>
     </section>
-    <button><a href="../../index.html">Voltar</a></button>
+    <button id="btn"><a href="../../index.html">Voltar</a></button>
 
-    <script src="script.js"></script>
+
+    <script type="module">
+        document.getElementById('btn_request').addEventListener('click', async () => {
+            const input = document.getElementById('request_input').value
+
+            const response = await fetch('http://localhost:3000/api/data', {
+                method: 'POST', 
+                headers: {'Content-Type': 'application/json'},
+                body:JSON.stringify ({mensagem:input})
+            })
+            const data = await response.json()
+            document.getElementById('p_html').textContent = data.resposta
+        })
+    </script>
 </body>
 </html>
